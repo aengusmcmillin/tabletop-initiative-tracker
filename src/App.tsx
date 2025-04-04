@@ -4,7 +4,7 @@ import AddCombatantForm from './components/AddCombatantForm'
 import { saveCombatants, readCombatants, resetCombatants } from './localStorageUtil';
 import { Combatant } from './types'
 import { v4 as uuidv4 } from "uuid";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { DndContext } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { SortableItem } from "./SortableItem";
 
