@@ -10,3 +10,7 @@ export function readCombatants(): Combatant[] {
 	const raw = localStorage.getItem(INITIATIVE_KEY);
 	return raw ? JSON.parse(raw) : []
 }
+
+export function resetCombatants() {
+	localStorage.removeItem(INITIATIVE_KEY);
+}

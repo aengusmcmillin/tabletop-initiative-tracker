@@ -16,6 +16,7 @@ export default function AddCombatantForm({ onAdd }: Props) {
     setInitiative(0);
   };
 
+
   return (
     <form onSubmit={handleSubmit} className="space-y-2">
       <input
@@ -23,14 +24,17 @@ export default function AddCombatantForm({ onAdd }: Props) {
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="border p-1 rounded"
+        className="border m-2 p-1 rounded"
+				data-1p-ignore
+				autoFocus={true}
       />
       <input
         type="number"
         placeholder="Initiative"
         value={initiative}
         onChange={(e) => setInitiative(Number(e.target.value))}
-        className="border p-1 rounded"
+        className="border m-2 p-1 rounded"
+				data-1p-ignore
       />
       <button type="submit" className="bg-blue-500 text-white px-2 py-1 rounded">
         Add Combatant

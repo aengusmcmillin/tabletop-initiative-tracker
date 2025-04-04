@@ -1,9 +1,12 @@
 import { useEffect, useState} from "react";
 import './App.css'
 import AddCombatantForm from './components/AddCombatantForm'
-import { saveCombatants, readCombatants } from './localStorageUtil';
+import { saveCombatants, readCombatants, resetCombatants } from './localStorageUtil';
 import { Combatant } from './types'
 import { v4 as uuidv4 } from "uuid";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { SortableItem } from "./SortableItem";
 
 function App() {
 	const [combatants, setCombatants] = useState<Combatant[]>(readCombatants());
@@ -19,21 +22,47 @@ function App() {
 		});
 	};
 
+	const resetData = () => {
+		resetCombatants();
+		setCombatants([]);
+	}
+
+
   return (
     <div className="app">
       <h1>Tabletop Initiative Tracker</h1>
 			<AddCombatantForm 
 				onAdd={addCombatant}
 			/>
-			<ul>
-				{combatants.map((c) => (
-					<li key={c.id}>
-						{c.name} - {c.initiative}
-					</li>
+    <DndContext 
+				onDragEnd={handleDragEnd}>
+			<SortableContext 
+				items={combatants.map((c) => c.id)}
+				strategy={verticalListSortingStrategy}
+				>
+<ul>
+					{combatants.map((c) => (
+						<SortableItem key={c.id} id={c.id} name={c.name} initiative={c.initiative} />
 				))}
-			</ul>
+</ul>
+			</SortableContext>
+		</DndContext>
+			<button onClick={resetData}>Reset Data</button>
     </div>
   )
+
+	function handleDragEnd(event: any) {
+			const {active, over} = event;
+
+			
+			if (active.id !== over.id) {
+					const oldIndex = combatants.findIndex((c) => c.id == active.id);
+					const newIndex = combatants.findIndex((c) => c.id == over.id);
+					const result =  arrayMove(combatants, oldIndex, newIndex);
+setCombatants(result);
+			}
+	}
 }
+
 
 export default App
