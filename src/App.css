@@ -1,9 +1,21 @@
 @import "tailwindcss";
 
 #root {
-  max-width: 1280px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+/* Prevent drag events on elements with no-drag class */
+.no-drag {
+  cursor: default !important;
+  touch-action: auto !important;
+}
+
+/* Make buttons more clickable */
+button {
+  cursor: pointer !important;
+  touch-action: manipulation !important;
 }
 
