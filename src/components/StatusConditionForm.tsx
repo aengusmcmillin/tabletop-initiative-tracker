@@ -85,7 +85,7 @@ export default function StatusConditionForm({ onAdd }: Props) {
         />
         <button
           onClick={handleAddCustom}
-          className="px-3 py-1 bg-gray-200 rounded"
+          className="px-3 py-1 bg-gray-800 rounded"
         >
           Add Custom
         </button>

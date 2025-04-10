@@ -110,34 +110,63 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <h1>Tabletop Initiative Tracker</h1>
-      <AddCombatantForm onAdd={addCombatant} />
-      <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
-        <SortableContext
-          items={combatants.map((c) => c.id)}
-          strategy={verticalListSortingStrategy}
-        >
-          <ul>
-            {combatants.map((c) => (
-              <SortableItem
-                key={c.id}
-                id={c.id}
-                name={c.name}
-                initiative={c.initiative}
-                statusConditions={c.statusConditions}
-                onAddStatus={(condition) =>
-                  addStatusCondition(c.id, condition)
-                }
-                onRemoveStatus={(index) =>
-                  removeStatusCondition(c.id, index)
-                }
-              />
-            ))}
-          </ul>
-        </SortableContext>
-      </DndContext>
-      <button onClick={resetData}>Reset Data</button>
+    <div className="app min-h-screen bg-gray-900 text-white">
+      <div className="container mx-auto px-4 py-8">
+        <header className="mb-8 text-center">
+          <h1 className="text-3xl font-bold mb-2">
+            Tabletop Initiative Tracker
+          </h1>
+          <p className="text-gray-400">Pathfinder 2e Remastered</p>
+        </header>
+
+        <AddCombatantForm onAdd={addCombatant} />
+
+        <div className="bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold">Initiative Order</h2>
+            <button
+              onClick={resetData}
+              className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-sm transition-colors duration-200"
+            >
+              Reset All Data
+            </button>
+          </div>
+
+          {combatants.length === 0 ? (
+            <div className="text-center py-8 text-gray-400">
+              <p>
+                No combatants added yet. Add your first combatant
+                above.
+              </p>
+            </div>
+          ) : (
+            <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
+              <SortableContext
+                items={combatants.map((c) => c.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                <ul className="space-y-2">
+                  {combatants.map((c) => (
+                    <SortableItem
+                      key={c.id}
+                      id={c.id}
+                      name={c.name}
+                      initiative={c.initiative}
+                      statusConditions={c.statusConditions}
+                      onAddStatus={(condition) =>
+                        addStatusCondition(c.id, condition)
+                      }
+                      onRemoveStatus={(index) =>
+                        removeStatusCondition(c.id, index)
+                      }
+                    />
+                  ))}
+                </ul>
+              </SortableContext>
+            </DndContext>
+          )}
+        </div>
+      </div>
     </div>
   );
 
